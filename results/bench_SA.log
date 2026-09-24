@@ -1,0 +1,34 @@
+RandomKFold r0f0 done
+RandomKFold r0f1 done
+RandomKFold r0f2 done
+RandomKFold r0f3 done
+RandomKFold r0f4 done
+RandomKFold r1f0 done
+RandomKFold r1f1 done
+RandomKFold r1f2 done
+RandomKFold r1f3 done
+RandomKFold r1f4 done
+LOTemp T900 done
+LOTemp T1000 done
+LOTemp T1100 done
+LOTime t15 done
+LOTime t30 done
+LOTime t45 done
+LOTime t60 done
+LOTime t75 done
+                     R2                        RMSE                         MAPE                    
+scheme           LOTemp LOTime RandomKFold   LOTemp   LOTime RandomKFold  LOTemp  LOTime RandomKFold
+model                                                                                               
+CatBoost          0.778  0.945       0.977  227.498  106.888      66.600  22.098  12.400      11.390
+ExtraTrees        0.890  0.986       0.965  160.276   54.656      82.233  13.022   4.884       9.237
+GPR-Matern52-ARD  0.908  0.986       0.981  146.625   53.427      60.276  19.354   5.629       9.088
+GPR-RBF-ARD       0.908  0.987       0.978  146.525   51.200      65.404  26.001   5.991      11.715
+GradBoost         0.782  0.943       0.967  225.483  108.317      79.952  22.280  14.802      14.826
+KNN               0.838  0.917       0.880  194.412  130.555     152.895  29.141  42.198      61.437
+LightGBM          0.778  0.939       0.970  227.649  112.565      76.467  22.116  13.648      11.087
+Linear            0.578  0.606       0.581  313.399  284.913     285.675  63.104  71.751      85.555
+MLP               0.655  0.608       0.697  283.361  284.165     243.036  62.012  80.944      82.489
+Poly3-Ridge       0.791  0.880       0.897  220.873  157.436     141.445  41.799  36.829      28.086
+RandomForest      0.780  0.946       0.955  226.428  105.327      94.149  21.464  10.319      10.695
+SVR               0.854  0.954       0.927  184.252   97.051     119.527  23.457  13.773      27.164
+XGBoost           0.778  0.944       0.970  227.545  107.379      76.392  21.935  14.034      11.430

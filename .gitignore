@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.streamlit/
+*.egg-info/
+.venv/
+venv/
+catboost_info/
+
+# copyrighted reference material - don't publish
+reference paper 1.pdf
+*.pdf
+
+# Large / regenerable artefacts
+results/koh_models.joblib
+results/oof_SA.csv
+figures/*.png
