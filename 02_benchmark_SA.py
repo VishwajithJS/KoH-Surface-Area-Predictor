@@ -34,11 +34,8 @@ oof = pd.concat(oof); oof.to_csv("results/oof_SA.csv", index=False)
 
 rows = []
 for (scheme, name), g in oof.groupby(["scheme", "model"]):
-    if scheme == "RandomKFold":   # pooled over the 2 repeats
-        m = metrics(g.y, g.pred)
-    else:
-        m = metrics(g.y, g.pred)
-    rows.append(dict(scheme=scheme, model=name, **m))
+    # metrics pooled over all folds (RandomKFold: over both repeats)
+    rows.append(dict(scheme=scheme, model=name, **metrics(g.y, g.pred)))
 res = pd.DataFrame(rows)
 res.to_csv("results/benchmark_SA_long.csv", index=False)
 tab = res.pivot(index="model", columns="scheme", values=["R2", "RMSE", "MAPE"])

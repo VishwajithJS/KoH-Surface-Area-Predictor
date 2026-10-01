@@ -1,10 +1,11 @@
 """Figures for the paper + active-learning (next-experiment) design."""
-import numpy as np, pandas as pd, joblib, matplotlib
+import os, numpy as np, pandas as pd, joblib, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from common import load_raw, FEATURES
 plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False, "figure.dpi": 130, "savefig.bbox": "tight"})
+os.makedirs("figures", exist_ok=True)   # not tracked by git (empty after clone)
 B = joblib.load("results/koh_models.joblib"); sa, yl, k = B["sa"], B["yield_ir4"], B["k95"]
 df = load_raw(); X, y = df[FEATURES].values, df.Sur_Area.values
 gp, sc = sa[-1], sa[0]
@@ -64,7 +65,7 @@ IRs, Ts, ts = np.arange(0, 7), np.arange(800, 1201, 50), np.arange(0, 91, 5)
 cand = pd.DataFrame([(a, b, c) for a in IRs for b in Ts for c in ts], columns=FEATURES)
 measured = set(map(tuple, df[FEATURES].values)); cand = cand[[tuple(r) not in measured for r in cand.values]].reset_index(drop=True)
 Zc, Zt = sc.transform(cand.values.astype(float)), sc.transform(X)
-kc = gp.kernel_.k1; noise = gp.kernel_.k2.noise_level; ys = gp._y_train_std
+kc = gp.kernel_.k1; noise = gp.kernel_.k2.noise_level
 def post_var(Ztrain, Zq):
     K = kc(Ztrain) + noise * np.eye(len(Ztrain)); Ks = kc(Zq, Ztrain); return np.diag(kc(Zq)) - np.einsum("ij,ij->i", Ks @ np.linalg.inv(K), Ks)
 sel, Zcur = [], Zt.copy()

@@ -6,8 +6,10 @@ conditions, with calibrated uncertainty and a built-in "which experiment next?" 
 ## Quick start
 ```bash
 pip install -r requirements.txt
+python 03_final_models.py                             # once: builds results/koh_models.joblib (not stored in git)
 python predict_api.py --ir 4 --temp 950 --time 52      # command-line prediction
 streamlit run app.py                                  # interactive app
+python -m pytest                                      # smoke tests
 ```
 
 ## Reproduce everything (about 10 min on 1 CPU)

@@ -1,9 +1,10 @@
 """Shared utilities for the KOH-activated-carbon ML project."""
-import re, warnings
+import os, re, warnings
 import numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 
-RAW = "data/AC_Prep_-_KOH.txt"
+ROOT = os.path.dirname(os.path.abspath(__file__))   # repo root, so paths work from any working directory
+RAW = os.path.join(ROOT, "data", "AC_Prep_-_KOH.txt")
 FEATURES = ["IR", "Act_Temp", "Act_Time"]
 
 def load_raw(path=RAW):

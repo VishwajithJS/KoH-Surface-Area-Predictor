@@ -1,8 +1,8 @@
 """Streamlit app:  streamlit run app.py"""
-import numpy as np, pandas as pd, streamlit as st
+import os, numpy as np, pandas as pd, streamlit as st
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from predict_api import predict, bundle
-from common import load_raw
+from common import load_raw, ROOT
 
 st.set_page_config(page_title="KOH Activated Carbon Predictor", layout="wide")
 st.title("KOH-activated carbon: surface area & yield predictor")
@@ -39,5 +39,5 @@ d = df[(df.IR == round(IR)) & (df.Act_Time == t)];  axs[1].scatter(d.Act_Temp, d
 st.pyplot(fig)
 st.subheader("Suggested next experiments")
 c3, c4 = st.columns(2)
-c3.write("**Max expected improvement** (find a higher surface area)"); c3.dataframe(pd.read_csv("results/next_experiments_exploit_EI.csv").round(1), hide_index=True)
-c4.write("**Max information** (reduce model uncertainty)"); c4.dataframe(pd.read_csv("results/next_experiments_explore.csv").round(1), hide_index=True)
+c3.write("**Max expected improvement** (find a higher surface area)"); c3.dataframe(pd.read_csv(os.path.join(ROOT, "results", "next_experiments_exploit_EI.csv")).round(1), hide_index=True)
+c4.write("**Max information** (reduce model uncertainty)"); c4.dataframe(pd.read_csv(os.path.join(ROOT, "results", "next_experiments_explore.csv")).round(1), hide_index=True)

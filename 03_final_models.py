@@ -38,10 +38,11 @@ summary["SA_ARD_lengthscales_std_units(IR,T,t)"] = [float(v) for v in ls]
 # Closed-form LOO for a GP with fixed hyper-parameters (Rasmussen & Williams, Eq. 5.12)
 Z = final_sa[0].transform(X)
 K = gp.kernel_(Z); Ki = np.linalg.inv(K)
-yn = (y - gp._y_train_mean) / gp._y_train_std
+y_mean, y_std = y.mean(), y.std()           # same normalisation as normalize_y=True (avoids private sklearn attributes)
+yn = (y - y_mean) / y_std
 a = Ki @ yn
-mu_loo = (yn - a / np.diag(Ki)) * gp._y_train_std + gp._y_train_mean
-sd_loo = np.sqrt(1.0 / np.diag(Ki)) * gp._y_train_std
+mu_loo = (yn - a / np.diag(Ki)) * y_std + y_mean
+sd_loo = np.sqrt(1.0 / np.diag(Ki)) * y_std
 df["SA_loo_pred"] = mu_loo; df["SA_loo_z"] = (y - mu_loo) / sd_loo
 summary["SA_LOO_fixed_hyperparams"] = metrics(y, mu_loo)
 df.sort_values("SA_loo_z", key=abs, ascending=False).head(12).to_csv("results/data_quality_flags.csv", index=False)
