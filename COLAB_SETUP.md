@@ -16,8 +16,7 @@ slower. Without a GPU everything runs on the CPU automatically.
 ## 3. Run everything
 `Runtime ▸ Run all`. When asked, allow access to Google Drive (needed so results persist).
 
-Run time: the first full run took 3.4 min on a 24-core PC; the free Colab runtime has 2 CPU cores, so expect roughly
-10-20 minutes there (not yet timed on Colab). Most of it is the leave-one-temperature/time-out benchmark of 15 models.
+Run time: a full first run took 15.5 min on the free Colab CPU runtime (3.4 min on a 24-core PC). Most of it is the leave-one-temperature/time-out benchmark of 15 models.
 Re-runs take about half as long because trained models and grouped predictions are cached in Drive.
 
 ## 4. Where things go
@@ -51,12 +50,15 @@ Every figure is saved as PNG (300 dpi), PDF and SVG (vector). See `figure_manife
 | `REMOVE_OUTLIERS` | False | drop Monte-Carlo-flagged rows before modelling |
 | `RUN_GROUPED_BENCHMARK` | True | leave-one-temperature/time-out for all 15 models (slowest step) |
 | `FORCE_RETRAIN` | False | ignore cached models in Drive |
+| `DRIVE_MOUNT_TIMEOUT_MIN` | 10 | minutes to wait for the Drive permission dialog |
 | `USE_GPU` | `"auto"` | `True` / `False` to force |
 | `SA_UNIT` | `"m²/g"` | **assumed** BET unit - confirm and edit |
 
 ## 7. Troubleshooting
-* **Drive did not mount** - the notebook continues, writing to `/content/KoH_Surface_Area_Research` (lost when the runtime
-  stops). Re-run the Drive cell and accept the permission dialog.
+* **Drive did not mount** - the notebook waits up to 10 minutes for you to approve Drive access
+  (`DRIVE_MOUNT_TIMEOUT_MIN`; Colab's own default is only 2). If it still fails, it continues writing to
+  `/content/KoH_Surface_Area_Research` (lost when the runtime stops). Stop the run (`Runtime ▸ Interrupt execution`),
+  re-run the Drive cell, approve access, then use `Runtime ▸ Run cell and below`.
 * **"Could not clone repository"** - Colab is offline or GitHub is unreachable. Upload `AC_Prep_-_KOH.txt` to
   `MyDrive/KoH_Surface_Area_Research/data/` and run again.
 * **A section failed** - the error is printed under that section and recorded in the final summary; the rest of the
